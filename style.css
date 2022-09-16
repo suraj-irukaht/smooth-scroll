@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+*,
+*::after,
+*::before {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+html {
+   scroll-behavior: smooth;
+}
+
+body {
+   font-family: 'Poppins', sans-serif;
+   line-height: 1.5;
+   font-size: 1rem;
+   background-color: white;
+   color: #333;
+   font-weight: 400;
+}
+
+a {
+   display: inline-block;
+   text-decoration: none;
+}
+
+.container {
+   max-width: 1200px;
+   margin-inline: auto;
+   padding-inline: 20px;
+}
+
+.wrapper {
+   position: relative;
+   width: 100%;
+   overflow: hidden;
+   padding-top: 63px;
+}
+
+.header {
+   position: absolute;
+   top: 0;
+   width: 100%;
+   left: 0;
+   padding-block: 15px;
+   background-color: beige;
+}
+
+.header .container {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.header.fixed {
+   position: fixed;
+   /* top: 0;
+   width: 100%;
+   left: 0; */
+}
+
+.navbar {
+   position: fixed;
+   top: 0;
+   width: 50%;
+   right: 0;
+   bottom: 0;
+   background-color: rgb(10, 21, 54);
+   padding: 70px 20px;
+   color: white;
+   transform: translateX(100%);
+   opacity: 0;
+   transition: all 0.3s linear;
+}
+
+.nav-active .navbar {
+   transform: translateX(0);
+   opacity: 1;
+}
+
+.navbar ul {
+   list-style: none;
+}
+
+.nav-closer {
+   position: absolute;
+   right: 20px;
+   top: 20px;
+   font-size: 25px;
+}
+
+.nav-opener {
+   font-size: 20px;
+}
+
+.navbar a {
+   color: inherit;
+}
+
+.navbar a.active-link {
+   color: crimson;
+}
+
+section {
+   min-height: 500px;
+   color: white;
+   padding-top: 20px;
+   scroll-margin-top: 63px;
+}
+
+section h2 {
+   text-align: center;
+   font-size: 30px;
+}
+
+section.home {
+   background-color: crimson;
+}
+
+section.about {
+   background-color: antiquewhite;
+}
+
+section.services {
+   background-color: bisque;
+}
+
+section.contact {
+   background-color: aquamarine;
+}
+
+section.blog {
+   background-color: aqua;
+}
+
+section.profile {
+   background-color: cornflowerblue;
+}
+
+.footer {
+   color: white;
+   padding: 30px 0;
+   background-color: rgb(10, 21, 54);
+}
+
+/* media queries */
+
+@media screen and (min-width: 1024px) {
+   .wrapper {
+      padding-top: 84px;
+   }
+
+   .header {
+      padding-block: 30px;
+   }
+
+   section {
+      min-height: 100vh;
+      scroll-margin-top: 84px;
+   }
+
+   .navbar {
+      position: relative;
+      background: transparent;
+      padding: 0;
+      width: auto;
+      transform: none;
+      opacity: 1;
+   }
+
+   .navbar ul {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+   }
+
+   .navbar a {
+      color: #333;
+   }
+
+   .nav-opener,
+   .nav-closer {
+      display: none;
+   }
+}
