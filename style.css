@@ -36,11 +36,11 @@ a {
    position: relative;
    width: 100%;
    overflow: hidden;
-   padding-top: 63px;
+   padding-top: var(--header-height);
 }
 
 .header {
-   position: absolute;
+   position: fixed;
    top: 0;
    width: 100%;
    left: 0;
@@ -56,9 +56,6 @@ a {
 
 .header.fixed {
    position: fixed;
-   /* top: 0;
-   width: 100%;
-   left: 0; */
 }
 
 .navbar {
@@ -107,7 +104,7 @@ section {
    min-height: 500px;
    color: white;
    padding-top: 20px;
-   scroll-margin-top: 63px;
+   /* scroll-margin-top: 63px; */
 }
 
 section h2 {
@@ -149,7 +146,7 @@ section.profile {
 
 @media screen and (min-width: 1024px) {
    .wrapper {
-      padding-top: 84px;
+      /* padding-top: 84px; */
    }
 
    .header {
@@ -158,7 +155,7 @@ section.profile {
 
    section {
       min-height: 100vh;
-      scroll-margin-top: 84px;
+      /* scroll-margin-top: 84px; */
    }
 
    .navbar {

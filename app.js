@@ -1,59 +1,9 @@
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
    initMobileNav();
-   initFixedHeader();
+   initUpdateHeight();
    initSmoothScroll();
+   initSetActiveSection();
 });
-
-// Mobile Navigation
-const initMobileNav = () => {
-   const navOpener = document.getElementById('opener');
-   const navCloser = document.getElementById('closer');
-   const navLinks = document.querySelectorAll('.navbar a');
-   const navBar = document.querySelector('.navbar');
-
-   const bodyClass = () => {
-      if (!document.body.classList.contains('nav-active')) {
-         return;
-      } else if (document.body.classList.contains('nav-active')) {
-         document.body.classList.remove('nav-active');
-      }
-   };
-
-   // show menu
-   navOpener.addEventListener('click', () => {
-      document.body.classList.add('nav-active');
-      document.body.style.overflow = 'hidden';
-   });
-
-   // hide menu
-   navCloser.addEventListener('click', () => {
-      bodyClass();
-      document.body.style.overflow = 'auto';
-   });
-
-   // hide menu on link click
-   navLinks.forEach((link) => {
-      link.addEventListener('click', () => {
-         document.body.classList.remove('nav-active');
-      });
-   });
-
-   // hide menu on outside click
-   // document.addEventListener('click', (e) => {
-   //    if (
-   //       document.body.classList.contains('nav-active') &&
-   //       !e.target.isEqualNode(navOpener) &&
-   //       !e.target.isEqualNode(navCloser) &&
-   //       !e.target.isEqualNode(navBar) &&
-   //       !navBar.contains(e.target)
-   //    ) {
-   //       document.body.classList.remove('nav-active');
-   //       console.log('clicked outside');
-   //    }
-   // });
-};
-
-//fixed header
 const initFixedHeader = () => {
    const header = document.querySelector('.header');
 
@@ -66,13 +16,79 @@ const initFixedHeader = () => {
    });
 };
 
-// smooth scroll
+const initMobileNav = () => {
+   const body = document.body;
+   const navOpener = document.querySelector('.nav-opener');
+   const navCloser = document.querySelector('.nav-closer');
+   const noScrollClass = 'no--scroll';
+   const navActiveClass = 'nav-active';
+
+   const showMenu = (e) => {
+      e.preventDefault();
+      body.classList.toggle(navActiveClass);
+
+      // when there is only one button
+      // body.classList.contains(navActiveClass)
+      //    ? body.classList.add(noScrollClass)
+      //    : body.classList.remove(noScrollClass);
+   };
+   const hideMenu = (e) => {
+      e.preventDefault();
+      if (body.classList.contains(navActiveClass)) {
+         body.classList.remove(navActiveClass);
+         body.classList.remove(noScrollClass);
+      }
+   };
+
+   navOpener.addEventListener('click', showMenu);
+   navCloser.addEventListener('click', hideMenu);
+};
+
+const initUpdateHeight = () => {
+   const root = document.querySelector(':root');
+   const header = document.querySelector('.header');
+   let headerHeight;
+   const getHeight = () => {
+      headerHeight = header?.clientHeight;
+      root.style.setProperty('--header-height', `${headerHeight}px`);
+   };
+   getHeight();
+   window.addEventListener('resize', getHeight);
+};
+
 const initSmoothScroll = () => {
+   const menuLinks = document.querySelectorAll('.navbar a');
+   const header = document.querySelector('.header');
+   const body = document.body;
+   let headerHeight;
+   const getHeight = () => {
+      headerHeight = header?.clientHeight;
+   };
+   getHeight();
+   window.addEventListener('resize', getHeight);
+   //removing class on click on each link and adding scroll
+   menuLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+         e.preventDefault();
+         if (body.classList.contains('nav-active')) {
+            body.classList.remove('nav-active');
+            body.classList.remove('no--scroll');
+         }
+
+         const value = link.getAttribute('href');
+         const itSection = document.querySelector(value);
+         const offsetTop = itSection.offsetTop;
+         window.scrollTo(0, `${offsetTop - headerHeight}`);
+      });
+   });
+};
+
+const initSetActiveSection = () => {
    const navLinks = document.querySelectorAll('.navbar a');
    const sections = document.querySelectorAll('section[id]');
 
    window.addEventListener('scroll', () => {
-      const scrollY = window.pageYOffset;
+      const scrollY = window.scrollY;
       let sectionId = '';
       sections.forEach((section) => {
          const sectionTop = section.offsetTop;
@@ -85,7 +101,6 @@ const initSmoothScroll = () => {
             if (!section.classList.contains('active-section')) {
                section.classList.add('active-section');
             }
-
             //getting id of active section
             sectionId = section.getAttribute('id');
          }
